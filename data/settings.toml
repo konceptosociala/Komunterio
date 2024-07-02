@@ -1,0 +1,12 @@
+[general]
+lang = "uk"
+debug_mode = true
+
+[video]
+width = 1280
+height = 768
+fullscreen = false
+
+[sound]
+music = 100
+sounds = 100
