@@ -126,7 +126,7 @@ public class Komunterio extends SimpleApplication {
         nifty.loadStyleFile("nifty-default-styles.xml");
         nifty.loadControlFile("nifty-default-controls.xml");
 
-        nifty.registerEffect("inventory-hint", "org.konceptosociala.kareladventures.ui.inventory.InventoryHint");
+        // nifty.registerEffect("inventory-hint", "org.konceptosociala.komunterio.ui.effects.InventoryHint");
 
         Logger.getLogger("de.lessvoid.nifty").setLevel(Level.SEVERE);
         Logger.getLogger("NiftyInputEventHandlingLog").setLevel(Level.SEVERE);
