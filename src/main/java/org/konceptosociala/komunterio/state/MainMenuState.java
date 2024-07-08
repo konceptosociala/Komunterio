@@ -5,12 +5,12 @@ import java.io.File;
 import javax.annotation.Nonnull;
 
 import org.konceptosociala.komunterio.Komunterio;
-import org.konceptosociala.komunterio.state.LoadGameState.LoadType;
 import org.konceptosociala.komunterio.ui.FadePanel;
 import org.konceptosociala.komunterio.ui.TextButton;
 import org.konceptosociala.komunterio.ui.main_menu.*;
 import org.konceptosociala.komunterio.utils.AudioManager;
 import org.konceptosociala.komunterio.utils.I18n;
+import org.konceptosociala.komunterio.utils.load_game.SavedGame;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.AppStateManager;
@@ -154,8 +154,11 @@ public class MainMenuState extends BaseAppState implements ScreenController, Act
     public void newGame() {
         audio.buttonClick.playInstance();
 
-        controlsPanel.setVisible(false);
-        selectChapterPanel.setVisible(true);
+        // controlsPanel.setVisible(false);
+        // selectChapterPanel.setVisible(true);
+
+        setEnabled(false);
+        stateManager.attach(new LoadGameState(new SavedGame(Komunterio.SAVING_PATH)));
     }
 
     public void exitNewGame() {
@@ -167,7 +170,7 @@ public class MainMenuState extends BaseAppState implements ScreenController, Act
         audio.buttonClick.playInstance();
 
         setEnabled(false);
-        stateManager.attach(new LoadGameState(LoadType.Saving));
+        stateManager.attach(new LoadGameState(new SavedGame(Komunterio.SAVING_PATH)));
     }
 
     public void openControls() {

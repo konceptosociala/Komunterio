@@ -11,6 +11,7 @@ import org.konceptosociala.komunterio.utils.GameSettings;
 import org.konceptosociala.komunterio.utils.I18n;
 
 import com.jme3.app.SimpleApplication;
+import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.KeyInput;
 import com.jme3.input.controls.KeyTrigger;
 import com.jme3.niftygui.NiftyJmeDisplay;
@@ -74,7 +75,8 @@ public class Komunterio extends SimpleApplication {
 
         nifty = initNifty();
         audio = new AudioManager(assetManager);
-        
+        assetManager.registerLocator(System.getProperty("user.dir"), FileLocator.class);
+
         mainMenuState = new MainMenuState();
         stateManager.attach(mainMenuState);
     }

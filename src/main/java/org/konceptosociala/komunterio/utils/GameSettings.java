@@ -1,6 +1,7 @@
 package org.konceptosociala.komunterio.utils;
 
 import java.io.File;
+import java.io.IOException;
 
 import com.moandjiezana.toml.*;
 
@@ -30,5 +31,9 @@ public class GameSettings extends Toml {
         } catch (Exception e) {
             Utils.LOG.severe(String.format("Config `%s` is invalid: `%s`", configPath, e.getMessage()));
         }
+    }
+
+    public void save(String configPath) throws IOException {
+        new TomlWriter().write(this, new File(configPath));
     }
 }

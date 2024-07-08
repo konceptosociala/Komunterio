@@ -62,8 +62,8 @@ dependencies {
     implementation "org.jmonkeyengine:jme3-awt-dialogs:" + jmonkeyengineVersion
     implementation 'org.jmonkeyengine:jme3-core:' + jmonkeyengineVersion
     implementation 'org.jmonkeyengine:jme3-desktop:' + jmonkeyengineVersion
-    runtimeOnly 'org.jmonkeyengine:jme3-jogg:' + jmonkeyengineVersion
-    runtimeOnly 'org.jmonkeyengine:jme3-plugins:' + jmonkeyengineVersion
+    implementation 'org.jmonkeyengine:jme3-jogg:' + jmonkeyengineVersion
+    implementation 'org.jmonkeyengine:jme3-plugins:' + jmonkeyengineVersion
 
     implementation 'org.jmonkeyengine:jme3-terrain:' + jmonkeyengineVersion
     implementation 'org.jmonkeyengine:jme3-effects:' + jmonkeyengineVersion

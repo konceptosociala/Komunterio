@@ -4,11 +4,18 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.konceptosociala.komunterio.Komunterio;
+import org.konceptosociala.komunterio.game.map.GameMap;
+import org.konceptosociala.komunterio.game.map.MapId;
 import org.konceptosociala.komunterio.ui.load_game.LoadingBar;
+import org.konceptosociala.komunterio.utils.Utils;
+import org.konceptosociala.komunterio.utils.load_game.GameLoadType;
 
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
+import com.jme3.asset.AssetManager;
+import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.InputManager;
+import com.jme3.scene.Node;
 
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.ImageBuilder;
@@ -25,13 +32,10 @@ import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 public class LoadGameState extends BaseAppState implements ScreenController {
-    public enum LoadType {
-        NewGame,
-        Saving,
-    }
-    private final LoadType loadType;
+    private final GameLoadType loadType;
 
     private Komunterio app;
+    private AssetManager assetManager;
     private InputManager inputManager;
     private Nifty nifty;
 
@@ -42,6 +46,7 @@ public class LoadGameState extends BaseAppState implements ScreenController {
     @Override
     protected void initialize(Application app) {
         this.app = (Komunterio) app;
+        this.assetManager = this.app.getAssetManager();
         this.inputManager = this.app.getInputManager();
         this.nifty = this.app.getNifty();
     }
@@ -91,24 +96,30 @@ public class LoadGameState extends BaseAppState implements ScreenController {
     @Override
     public void update(float tpf) {
         switch (frameCount) {
-            case 1 -> setProgress(0.1f, "load1", this::load1);
-            case 2 -> setProgress(0.5f, "load2", this::load2);
-            case 3 -> setProgress(0.9f, "load3", this::load3);
+            case 1 -> setProgress(0.1f, "test", this::test);
         }
 
         frameCount++;
     }
 
-    private void load1() {
-        
-    }
+    private void test() {
+        try {
+            var mapId = new MapId("kom_test_0");
+            var testMap = new GameMap(mapId, assetManager);
 
-    private void load2() {
-        
-    }
+            var cube = testMap
+                .getScene();
 
-    private void load3() {
-        
+            Utils.LOG.info(cube.getNumControls()+"");
+
+            cube.getUserDataKeys()
+                .forEach((key) -> {
+                    Utils.LOG.info(key+" -> "+cube.getUserData(key));
+                });
+        } catch (Throwable e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
     }
 
     private void setProgress(
