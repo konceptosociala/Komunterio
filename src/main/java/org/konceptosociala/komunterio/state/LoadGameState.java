@@ -13,9 +13,7 @@ import org.konceptosociala.komunterio.utils.load_game.GameLoadType;
 import com.jme3.app.Application;
 import com.jme3.app.state.BaseAppState;
 import com.jme3.asset.AssetManager;
-import com.jme3.asset.plugins.FileLocator;
 import com.jme3.input.InputManager;
-import com.jme3.scene.Node;
 
 import de.lessvoid.nifty.Nifty;
 import de.lessvoid.nifty.builder.ImageBuilder;
@@ -103,23 +101,18 @@ public class LoadGameState extends BaseAppState implements ScreenController {
     }
 
     private void test() {
-        try {
-            var mapId = new MapId("kom_test_0");
-            var testMap = new GameMap(mapId, assetManager);
+        var mapId = new MapId("kom_test_0");
+        var testMap = new GameMap(mapId, assetManager);
 
-            var cube = testMap
-                .getScene();
+        var cube = testMap
+            .getScene();
 
-            Utils.LOG.info(cube.getNumControls()+"");
+        Utils.LOG.info(cube.getNumControls()+"");
 
-            cube.getUserDataKeys()
-                .forEach((key) -> {
-                    Utils.LOG.info(key+" -> "+cube.getUserData(key));
-                });
-        } catch (Throwable e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
+        cube.getUserDataKeys()
+            .forEach((key) -> {
+                Utils.LOG.info(key+" -> "+cube.getUserData(key));
+            });
     }
 
     private void setProgress(

@@ -3,25 +3,30 @@ package org.konceptosociala.komunterio.game.map;
 import java.util.regex.*;
 
 public class MapId {
-    public static final Pattern MAP_ID_REGEX = Pattern.compile("kom_([a-z]+)_([0-9]+)");
+    public static final Pattern MAP_ID_REGEX = Pattern.compile("kom_(?<chapter>[a-z]+)_(?<number>[0-9]+)");
 
-    private String id;
+    private String chapter;
+    private int number;
 
     public MapId(String id) throws InvalidMapIdException {
-        if (!MAP_ID_REGEX.matcher(id).matches())
-            throw new InvalidMapIdException(id);
-        else
-            this.id = id;
-    }
+        var matcher = MAP_ID_REGEX.matcher(id);
 
-    public class InvalidMapIdException extends Exception {
-        public InvalidMapIdException(String id) {
-            super("Invalid map id `"+id+"`");
+        if (matcher.matches()) {
+            chapter = matcher.group("chapter");
+            number = Integer.parseInt(matcher.group("number"));
+        } else {
+            throw new InvalidMapIdException(id);
         }
     }
 
     @Override
     public String toString() {
-        return id;
+        return "kom_"+chapter+"_"+number;
+    }
+
+    public class InvalidMapIdException extends RuntimeException {
+        public InvalidMapIdException(String id) {
+            super("Invalid map id `"+id+"`");
+        }
     }
 }

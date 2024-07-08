@@ -4,9 +4,11 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import org.konceptosociala.komunterio.game.PlayerControl;
+import org.konceptosociala.komunterio.game.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -50,17 +52,29 @@ public class GameObjectExtrasLoader implements ExtrasLoader {
                         }}
                     );
 
-                    for (var entry : userData.entrySet()) {
-                        spatial.setUserData(entry.getKey(), entry.getValue());
-                    }
-
-                    spatial.addControl(new PlayerControl());
+                    initPlayer(spatial, userData);
                 }
                 default -> {} // TODO: other game object types
             }
         }
 
         return input;
+    }
+
+    @SuppressWarnings("unchecked")
+    private void initPlayer(Spatial spatial, Map<String, Object> userData) {
+        for (var entry : userData.entrySet()) {
+            var key = entry.getKey();
+            var value = switch (key) {
+                case "health" -> entry.getValue();
+                case "inventory" -> new Inventory((List<Integer>) entry.getValue());
+                default -> throw new InvalidParameterException(key);
+            };
+
+            spatial.setUserData(key, value);
+        }
+
+        spatial.addControl(new PlayerControl());
     }
 
     private static Map<String, Object> getUserData(
